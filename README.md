@@ -7,8 +7,8 @@ With that being said getting a node up can be a pain if you just want to poke ar
 
 1. clone this reposutory and change to the repo directory
 
- git clone https://github.com/bag0bits/carnode.git
- cd carnode
+``` git clone https://github.com/bag0bits/carnode.git
+ cd carnode```
 
 2. build your docker container. you can build with the script or just use the docker build command (takes about an hour). This will user the Dockerfile pull from the repository and create an image with cabal, GHC, Libsodium, cardano-node, and cardano-cli. (NOTICE: This will take some time so be pation)
 
