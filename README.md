@@ -1,7 +1,7 @@
 # carnode
 Simple docker builder for cardano-cli and cardano-node for running a Cardano staking pool.
 
-Ever want to try your and at running a stake pool? Well you came to the right place. With this docker container you can get a relay or a producer node up in no time so you can check out the functionality of the project. Running a pool will help the decentralization of the network so the more people that gets involve will help the network be more secure and add values to the rest of the community.
+Ever want to try your skill/luck and at running a stake pool? Well you came to the right place. With this docker container you can get a relay or a producer node up in no time.  Running a pool will help the decentralization of the network. More people getting involve is a net positive to the network, help it be more secure, and add values to the rest of the community.
 
 With that being said getting a node up can be a pain if you just want to poke around and check it out. Here's where I can help.
 
