@@ -89,5 +89,16 @@ run cabal build all
 run cp -p dist-newstyle/build/x86_64-linux/ghc-8.10.2/cardano-cli-1.25.1/x/cardano-cli/build/cardano-cli/cardano-cli /home/cardano/.local/bin/
 run cp -p dist-newstyle/build/x86_64-linux/ghc-8.10.2/cardano-node-1.25.1/x/cardano-node/build/cardano-node/cardano-node /home/cardano/.local/bin/
 
+
+## install gLiveView
+#####################
+# workdir /home/cardano
+# run wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/gLiveView.sh
+# run wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/env
+# run chmod 755 gLiveView.sh
+
+# run sed -i env -e 's@#CONFIG="${CNODE_HOME}/files/config.json"@CONFIG="/home/cardano/conf/mainnet-config.json"@g'
+# run sed -i env -e 's@#SOCKET="${CNODE_HOME}/sockets/node0.socket"@SOCKET="/home/cardano/db/socket"@g'
+
 run mkdir /home/cardano/node
 workdir /home/cardano/node
