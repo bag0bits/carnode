@@ -1,14 +1,23 @@
 # carnode
 Simple docker builder for cardano-cli and cardano-node for running a Cardano staking pool.
 
+<<<<<<< HEAD
 Ever want to try your and at running a stake pool? Well you came to the right place. With this docker container you can get a relay or a producer node up in no time so you can check out the functionality of the project. Running a pool will help the decentralization of the network so the more people that gets involve will help the network be more secure and add values to the rest of the community.
+=======
+Ever want to try your skill/luck and at running a stake pool? Well you came to the right place. With this docker container you can get a relay or a producer node up in no time.  Running a pool will help the decentralization of the network. More people getting involve is a net positive to the network, help it be more secure, and add values to the rest of the community.
+>>>>>>> b2daf45b1a4b8ae08eee5435b9ccf6dfd886053c
 
 With that being said getting a node up can be a pain if you just want to poke around and check it out. Here's where I can help.
 
 1. clone this reposutory and change to the repo directory
 
+<<<<<<< HEAD
  git clone https://github.com/bag0bits/carnode.git
  cd carnode
+=======
+>git clone https://github.com/bag0bits/carnode.git
+>cd carnode
+>>>>>>> b2daf45b1a4b8ae08eee5435b9ccf6dfd886053c
 
 2. build your docker container. you can build with the script or just use the docker build command (takes about an hour). This will user the Dockerfile pull from the repository and create an image with cabal, GHC, Libsodium, cardano-node, and cardano-cli. (NOTICE: This will take some time so be pation)
 
