@@ -9,6 +9,6 @@ docker run -ti --rm \
 	cardano-node run --topology conf/mainnet-topology.json \
                          --config conf/mainnet-config.json \
                          --database-path db \
-                         --socket-path socket \
+                         --socket-path db/socket \
                          --host-addr 0.0.0.0 \
                          --port 6000

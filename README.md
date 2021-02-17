@@ -44,3 +44,31 @@ This will start a node and detach to background it.
 ```
 docker logs --follow cardano-relay01
 ```
+
+PHEW!!! MAN that took a while... but  now that we have the binaries we can proceed to create keys and interact with the Cardano network.
+
+6. Lets create some alise so that we can run it easier
+```
+alias ccli='docker run --rm -v $(pwd):/data carnode cardano-cli'
+```
+
+7. Creating the KES key-pair
+```
+ccli node key-gen-KES \
+    --verification-key-file /data/kes.vkey \
+    --signing-key-file /data/kes.skey
+```
+
+8. Create your pool cold key-pair
+```
+ccli node key-gen \
+    --cold-verification-key-file /data/node.vkey \
+    --cold-signing-key-file /data/node.skey \
+    --operational-certificate-issue-counter /data/node.counter
+```
+```
+CONF=/home/cardano/node/conf
+pushd +1
+slotsPerKESPeriod=$(cat ${CONF}/mainnet-shelley-genesis.json | jq -r '.slotsPerKESPeriod')
+echo slotsPerKESPeriod: ${slotsPerKESPeriod}
+```
