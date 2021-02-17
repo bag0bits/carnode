@@ -1,50 +1,46 @@
 # carnode
-Simple docker builder for cardano-cli and cardano-node for running a Cardano staking pool.
 
-<<<<<<< HEAD
-Ever want to try your and at running a stake pool? Well you came to the right place. With this docker container you can get a relay or a producer node up in no time so you can check out the functionality of the project. Running a pool will help the decentralization of the network so the more people that gets involve will help the network be more secure and add values to the rest of the community.
-=======
-Ever want to try your skill/luck and at running a stake pool? Well you came to the right place. With this docker container you can get a relay or a producer node up in no time.  Running a pool will help the decentralization of the network. More people getting involve is a net positive to the network, help it be more secure, and add values to the rest of the community.
->>>>>>> b2daf45b1a4b8ae08eee5435b9ccf6dfd886053c
+A simple docker builder for cardano-cli and cardano-node for running a Cardano staking pool (or at lease check it out).
 
-With that being said getting a node up can be a pain if you just want to poke around and check it out. Here's where I can help.
+from cardano.org
+
+>A stake pool is a reliable server node that focuses on maintenance and holds the combined stake of various stakeholders in a single entity. Stake pools are responsible for processing transactions and producing new blocks and are at the core of Ouroboros, the Cardano proof-of-stake protocol.
+>
+>To be secure, Ouroboros requires a good number of ada holders to be online and maintain sufficiently good network connectivity at any given time. This is why Ouroboros relies on stake pools, entities committed to run the protocol 24/7, on behalf of the contributing ada holders.
+
+This docker image builder will help you get started with creating the environments and files that you will need to start a stake pool. The more people gets invlove the more decentralize and secure the network become. This will add value to ADAs and we all get the benifits.  SO LETS GET STARTED!!!
+
+I'm going to assume that you have docker installed and configured. if not click [here](https://www.google.com).
 
 1. clone this reposutory and change to the repo directory
+```
+git clone https://github.com/bag0bits/carnode.git
+cd carnode
+```
 
-<<<<<<< HEAD
- git clone https://github.com/bag0bits/carnode.git
- cd carnode
-=======
->git clone https://github.com/bag0bits/carnode.git
->cd carnode
->>>>>>> b2daf45b1a4b8ae08eee5435b9ccf6dfd886053c
+2. build your docker container (this will take 45min or so). 
+```
+docker build -t carnode .
+```
 
-2. build your docker container. you can build with the script or just use the docker build command (takes about an hour). This will user the Dockerfile pull from the repository and create an image with cabal, GHC, Libsodium, cardano-node, and cardano-cli. (NOTICE: This will take some time so be pation)
-
- ./build.sh
--or-
- docker build -t carnode .
-
-At this poing you should have a docker image with build version of cardano-node and cardano-cli version 1.25.1. 
-
-3. at this poing you should have a docker image with build version of cardano-node and cardano-cli version 1.25.1. now lets get the configs from IOG.
-
- cd conf
- ./download_config_files.sh
-
-this will download 4 files from IOG fro the configuration of the node
-
- mainnet-config.json
- mainnet-byron-genesis.json
- mainnet-shelley-genesis.json
- mainnet-topology.json
+3. at this poing you should have a docker image with a build version of cardano-node and cardano-cli version 1.25.1. Now lets go to IOG and download the configuration files
+```
+cd conf
+./download_config_files.sh
+```
+This will download 4 files from IOG fro the configuration of the node.
+mainnet-config.json
+mainnet-byron-genesis.json
+mainnet-shelley-genesis.json
+mainnet-topology.json
 
 4. at this point you should have a simple relay node and can be start by running the script
-
- relay-node-run-example.sh
-
+```
+relay-node-run-example.sh
+```
 This will start a node and detach to background it.
 
 5. reading the activity by following the docker log for that container
-
- docker logs --follow cardano-relay01
+```
+docker logs --follow cardano-relay01
+```
