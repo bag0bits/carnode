@@ -1,6 +1,6 @@
 PORT=6000
 NODENAME=cardano-relay01
-docker run -d --rm \
+docker run -ti --rm \
         --user 0 \
         --name ${NODENAME} \
 	-v $(pwd)/conf:/home/cardano/node/conf \
