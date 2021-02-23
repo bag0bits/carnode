@@ -209,7 +209,7 @@ WORKDIR /opt/rt-view
 RUN wget https://github.com/input-output-hk/cardano-rt-view/releases/download/0.3.0/cardano-rt-view-0.3.0-linux-x86_64.tar.gz
 RUN tar zxvf cardano-rt-view-0.3.0-linux-x86_64.tar.gz
 RUN rm -f cardano-rt-view-0.3.0-linux-x86_64.tar.gz
-ENTRYPOINT /opt/rt-view/cardano-rt-view --config /data/config --static /data/static
+ENTRYPOINT /opt/rt-view/cardano-rt-view --static /data/static
 EOF
 ```
 Building the image
@@ -226,7 +226,7 @@ docker run -ti --rm \
   -p 4001:4001 \
   -p 4002:4002 \
   -p 8024:8024 \
-  cart-view --static /static
+  cart-view --static /data/static
 ```
 OUTPUT
 ```
