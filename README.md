@@ -80,7 +80,7 @@ alias cardano-cli="docker run -ti --rm \
    --entrypoint /bin/cardano-cli \
    inputoutput/cardano-node"
 ```
-Now test our alias to make sure we can access the binaries
+Now test our alias to make sure we can access the cli
 ```
 # cardano-cli version
 cardano-cli 1.25.1 - linux-x86_64 - ghc-8.10
