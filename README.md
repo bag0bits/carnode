@@ -77,8 +77,6 @@ alias cardano-cli="docker run -ti --rm \
    --workdir /configuration \
    --entrypoint /bin/cardano-cli \
    inputoutput/cardano-node"
-
-alias cardano-node="docker run -ti --rm inputoutput/cardano-node"
 ```
 Now test our alias to make sure we can access the binaries
 ```
