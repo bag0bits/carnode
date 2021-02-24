@@ -1,4 +1,4 @@
-#Using the official cardano-node docker to create an ADA staking pool
+# Using the official cardano-node docker to create an ADA staking pool
 
 This is to document how to create a Cardano ADA staking pool using the official docker image created by IOG. Assuming that you have docker configured and ready to go. I also use wget to download files so you may also need to install if it's not available.
 
