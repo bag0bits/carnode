@@ -85,10 +85,6 @@ Now test our alias to make sure we can access the binaries
 # cardano-cli version
 cardano-cli 1.25.1 - linux-x86_64 - ghc-8.10
 git rev 9a7331cce5e8bc0ea9c6bfa1c28773f4c5a7000f
-
-# cardano-node version
-cardano-node 1.25.1 - linux-x86_64 - ghc-8.10
-git rev 9a7331cce5e8bc0ea9c6bfa1c28773f4c5a7000f
 ```
 ### simpleLiveView
 
