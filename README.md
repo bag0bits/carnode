@@ -186,6 +186,12 @@ So lets run this script on the **producer node**.
 # cd ${NODE_HOME}
 # run-producer-example.sh
 ```
+
+## todo
+
+need to add register section
+
+
 ### (Optional) Setup cardano-rt-view node dashboard (DO IT!)
 Come on .. you know you like dashboards.. Lets get one going..
 
