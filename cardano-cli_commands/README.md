@@ -48,3 +48,17 @@ Example stake address
 ```
 stake_test1uz07gqs44t3qr5ktmp9qseqfzusvv8epva9xyxsdz0h9jnc3335hx
 ```
+## Byron wallet + Stake address = Shelley address
+
+# Generate the Shelley address with both payment and stake keys
+```
+cardano-cli address build \
+  --payment-verification-key-file wallet01.vkey \
+  --stake-verification-key-file stake.vkey \
+  --out-file wallet01-shelley.addr \
+  --testnet-magic 1097911063
+```
+Example Shelley address
+```
+addr_test1qq4xge2xqmm67lle8urn9ejlkv0gfgrnhucgqnwgg5yykwylusppt2hzq8fvhkz2ppjqj9eqcc0jze62vgdq6ylwt98swh5q86
+```
