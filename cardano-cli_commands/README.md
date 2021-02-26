@@ -50,7 +50,7 @@ stake_test1uz07gqs44t3qr5ktmp9qseqfzusvv8epva9xyxsdz0h9jnc3335hx
 ```
 ## Byron wallet + Stake address = Shelley address
 
-# Generate the Shelley address with both payment and stake keys
+### Generate the Shelley address with both payment and stake keys
 ```
 cardano-cli address build \
   --payment-verification-key-file wallet01.vkey \
