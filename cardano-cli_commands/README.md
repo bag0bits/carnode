@@ -62,3 +62,7 @@ Example Shelley address
 ```
 addr_test1qq4xge2xqmm67lle8urn9ejlkv0gfgrnhucgqnwgg5yykwylusppt2hzq8fvhkz2ppjqj9eqcc0jze62vgdq6ylwt98swh5q86
 ```
+If all that went well you should be able to query the wallet
+```
+cardano-cli query utxo --testnet-magic 1097911063 --mary-era --address $(cat wallet01-shelley.addr)
+```
