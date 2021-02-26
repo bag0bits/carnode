@@ -20,3 +20,5 @@ cardano-cli address build \
   --out-file wallet01.addr
   --testnet-magic 1097911063
 ```
+you will now have a wallet01.addr file with the address of your wallet that you can send ada to.. cool!
+
