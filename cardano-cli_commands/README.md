@@ -66,3 +66,14 @@ If all that went well you should be able to query the wallet
 ```
 cardano-cli query utxo --testnet-magic 1097911063 --mary-era --address $(cat wallet01-shelley.addr)
 ```
+
+At this point we should have
+* wallet01.vkey wallet verify key
+* wallet01.skey wallet signing key
+* wallet01.addr byron wallet address
+* stake.vkey stake verify key
+* stake.skey stake signing key
+* stake.addr stake address
+* wallet01-shelley.addr wallet address with staking
+
+
