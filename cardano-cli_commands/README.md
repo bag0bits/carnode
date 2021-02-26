@@ -76,4 +76,51 @@ At this point we should have
 * stake.addr stake address
 * wallet01-shelley.addr wallet address with staking
 
+This is all the parts of a wallet.. you can send and recieve to the address and you can stake with it... well.. you first need some ADAs..
 
+## Send some money to your wallet
+
+So lets send some ada to the address in wallet01-shelley.addr. So lets say i have another wallet with 2000 ADAs with the following files.
+
+* wallet77.vkey
+* wallet77.skey
+* wallet77.addr #shelley address with no byron address
+* stake77.vkey
+* stake77.skey
+* stake77.addr
+
+we are going to send 100 ADAs to our wallet01-shelley.addr
+
+1 get current slot
+```
+currentSlot=$(cardano-cli query tip --testnet-magic 1097911063 | jq -r '.slotNo')
+```
+2 set the ammount to send
+```
+amountToSend=10000000
+```
+3 set destination
+```
+destinationAddress=$(cat wallet01-shelley.addr)
+```
+4 now we get the balance from the source wallet
+```
+cardano-cli query utxo --address $(cat wallet77.addr) --mary-era --testnet-magic 1097911063 > fullUtxo.out
+tail -n +3 fullUtxo.out | sort -k3 -nr > balance.out
+```
+```
+tx_in=""
+total_balance=0
+while read -r utxo; do
+    in_addr=$(awk '{ print $1 }' <<< "${utxo}")
+    idx=$(awk '{ print $2 }' <<< "${utxo}")
+    utxo_balance=$(awk '{ print $3 }' <<< "${utxo}")
+    total_balance=$((${total_balance}+${utxo_balance}))
+    echo TxHash: ${in_addr}#${idx}
+    echo ADA: ${utxo_balance}
+    tx_in="${tx_in} --tx-in ${in_addr}#${idx}"
+done < balance.out
+txcnt=$(cat balance.out | wc -l)
+echo Total ADA balance: ${total_balance}
+echo Number of UTXOs: ${txcnt}
+```
