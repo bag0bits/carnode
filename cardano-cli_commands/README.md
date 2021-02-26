@@ -16,6 +16,8 @@ This will create 2 files
 * wallet01.vkey the verifying key 
 * wallet01.skey the signing key
 
+*WARNING* *WARNING* same warning as above.. This will create a wallet01.addr file and will overwirte if exsit in current directory.
+
 ```
 cardano-cli address build \
   --payment-verification-key-file wallet01.vkey \
