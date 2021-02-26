@@ -26,3 +26,9 @@ cardano-cli address build \
 ```
 you will now have a wallet01.addr file with the address of your wallet that you can send ada to.. cool!
 
+Example byron address
+```
+addr_test1vq4xge2xqmm67lle8urn9ejlkv0gfgrnhucgqnwgg5yykwq682a83
+```
+
+
