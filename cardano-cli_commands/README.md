@@ -1,8 +1,8 @@
 # Notes on cardano-cli
 
-This is mostly how to do stuff vai the cli.
+## This is mostly how to do stuff vai the cli.
 
-## Create a Byron wallet with "address keygen" and "address build". With a byron wallet you can send and recive ADA but that's about it. So not very useful but it's a start
+Create a Byron wallet with "address keygen" and "address build". With a byron wallet you can send and recive ADA but that's about it. So not very useful but it's a start
 
 *WARNING* *WARNING* this will create two wallet key files at currnet directory and will overwrite anything with that name so please be careful. 
 
