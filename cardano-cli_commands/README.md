@@ -30,5 +30,21 @@ Example byron address
 ```
 addr_test1vq4xge2xqmm67lle8urn9ejlkv0gfgrnhucgqnwgg5yykwq682a83
 ```
-
-
+We can do better than just holding ADAs.. lets make it a shelley address using "stake-address key-gen" to gen the keypair and "stake-address build" to get the stake address. With a shelley address you can now stake your ada. but first we need to create a stake address. (*WARNING* bla bla creating 2 files will delete..)
+## Creating a stake address for our byron wallet
+```
+ cardano-cli stake-address key-gen \
+  --verification-key-file stake.vkey \
+  --signing-key-file stake.skey
+```
+Now using the stake keys we can create a stake address
+```
+cardano-cli stake-address build \
+  --stake-verification-key-file stake.vkey \
+  --out-file stake.addr \
+  --testnet-magic 1097911063
+```
+Example stake address
+```
+stake_test1uz07gqs44t3qr5ktmp9qseqfzusvv8epva9xyxsdz0h9jnc3335hx
+```
