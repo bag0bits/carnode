@@ -7,57 +7,35 @@
 ###
 ###################################################
 
+#Release note
+
+# v0.1 cardano-node version 1.25.1 
+# v0.2 cardano-node version 1.29.0
+
+
 ## lock Ubuntu to 20.04
 ########################
 from ubuntu:20.04
-
 
 ## Make apt-get non-interactive
 ################################
 env DEBIAN_FRONTEND="noninteractive"
 
-
 ## Update the repo and install all the needed packages
 #######################################################
 run apt-get update
 run apt-get -y upgrade
-run apt-get -y install automake build-essential pkg-config libffi-dev libgmp-dev libssl-dev libtinfo-dev libsystemd-dev zlib1g-dev make g++ tmux git jq wget libncursesw5 libtool autoconf bc tcptraceroute
-
+run apt-get -y install git jq bc make automake rsync htop curl build-essential pkg-config libffi-dev libgmp-dev libssl-dev libtinfo-dev libsystemd-dev zlib1g-dev make g++ wget libncursesw5 libtool autoconf libnuma-dev pkg-config libgmp-dev libssl-dev libtinfo-dev libsystemd-dev zlib1g-dev build-essential curl libgmp-dev libffi-dev libncurses-dev libtinfo5 
 
 ## Add the cardano user and set user as the installer
 ######################################################
 run useradd -ms /bin/bash cardano
 user cardano
 workdir /home/cardano
-
-
-## Install Cabal 3.2.0 from haskell.org
-################################################
-run wget -4 -q https://downloads.haskell.org/~cabal/cabal-install-3.2.0.0/cabal-install-3.2.0.0-x86_64-unknown-linux.tar.xz
-run tar -xf cabal-install-3.2.0.0-x86_64-unknown-linux.tar.xz
-run rm cabal-install-3.2.0.0-x86_64-unknown-linux.tar.xz cabal.sig
-run mkdir -p /home/cardano/.local/bin
-run mv cabal /home/cardano/.local/bin/
-env PATH="/home/cardano/.local/bin:${PATH}"
-run cabal update
-
-
-## Install ghc 8.10.2
-######################
 run mkdir -p /home/cardano/src
-workdir /home/cardano/src
-run wget https://downloads.haskell.org/ghc/8.10.2/ghc-8.10.2-x86_64-deb9-linux.tar.xz
-run tar -xf ghc-8.10.2-x86_64-deb9-linux.tar.xz
-run rm ghc-8.10.2-x86_64-deb9-linux.tar.xz
-workdir /home/cardano/src/ghc-8.10.2
-run ./configure
-user root
-run make install
-
 
 ## Install libsodium and set checkout tag to 66f017f1
 ######################################################
-user cardano
 workdir /home/cardano/src
 run git clone https://github.com/input-output-hk/libsodium
 workdir /home/cardano/src/libsodium
@@ -67,38 +45,57 @@ run ./configure
 run make
 user root
 run make install
+user cardano
 
+## Install Cabal and ghc
+#########################
+workdir /home/cardano/src
+env BOOTSTRAP_HASKELL_NONINTERACTIVE=1
+run curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org > ghc.sh
+run chmod +x /home/cardano/src/ghc.sh
+run /home/cardano/src/ghc.sh
+env PATH=/home/cardano/.ghcup/bin:${PATH}
+workdir /home/cardano
+run ghcup upgrade
+run ghcup install cabal 3.4.0.0
+run ghcup set cabal 3.4.0.0
+run ghcup install ghc 8.10.4
+run ghcup set ghc 8.10.4
 
 ## Now to Cardano node and cli (tag 1.25.1)
 ############################################
-user cardano
 run echo 'export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"' >> /home/cardano/.bashrc
 run echo 'export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"' >> /home/cardano/.bashrc
 env LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 env PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
 workdir /home/cardano/src
 run git clone https://github.com/input-output-hk/cardano-node.git
+run chown -R cardano.cardano cardano-node
 workdir /home/cardano/src/cardano-node
 run git fetch --all --recurse-submodules --tags
-run git checkout tags/1.25.1
-run cabal configure --with-compiler=ghc-8.10.2
+run git checkout tags/1.29.0
+run cabal configure -O0 -w ghc-8.10.4
 run echo "package cardano-crypto-praos" >> cabal.project.local
 run echo "  flags: -external-libsodium-vrf" >> cabal.project.local
-run cabal build all
-
-run cp -p dist-newstyle/build/x86_64-linux/ghc-8.10.2/cardano-cli-1.25.1/x/cardano-cli/build/cardano-cli/cardano-cli /home/cardano/.local/bin/
-run cp -p dist-newstyle/build/x86_64-linux/ghc-8.10.2/cardano-node-1.25.1/x/cardano-node/build/cardano-node/cardano-node /home/cardano/.local/bin/
-
+run sed -i /home/cardano/.cabal/config -e "s/overwrite-policy:/overwrite-policy: always/g"
+run cabal build cardano-cli cardano-node
+run mkdir -p /home/cardano/.local/bin
+run cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.4/cardano-node-1.29.0/x/cardano-node/noopt/build/cardano-node/cardano-node /home/cardano/.local/bin/
+run cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.4/cardano-cli-1.29.0/x/cardano-cli/noopt/build/cardano-cli/cardano-cli /home/cardano/.local/bin/
+run echo 'PATH=/home/cardano/.local/bin:${PATH}' >> /home/cardano/.bashrc
 
 ## install gLiveView
 #####################
-# workdir /home/cardano
-# run wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/gLiveView.sh
-# run wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/env
-# run chmod 755 gLiveView.sh
+workdir /home/cardano
+user root
+run apt-get install -y tcptraceroute
+user cardano
+run wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/gLiveView.sh
+run wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/env
+run chmod 755 gLiveView.sh
 
-# run sed -i env -e 's@#CONFIG="${CNODE_HOME}/files/config.json"@CONFIG="/home/cardano/conf/mainnet-config.json"@g'
-# run sed -i env -e 's@#SOCKET="${CNODE_HOME}/sockets/node0.socket"@SOCKET="/home/cardano/db/socket"@g'
+run sed -i env -e 's@#CONFIG="${CNODE_HOME}/files/config.json"@CONFIG="/home/cardano/node/mainnet-config.json"@g'
+run sed -i env -e 's@#SOCKET="${CNODE_HOME}/sockets/node0.socket"@SOCKET="/home/cardano/node/socket"@g'
 
 run mkdir /home/cardano/node
 workdir /home/cardano/node
