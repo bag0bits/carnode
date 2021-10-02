@@ -1,4 +1,8 @@
-Docker image for cardano-node 1.30.1 on ubuntu 20.04
+Docker image for cardano-node 1.30.1 on ubuntu 20.04. 
+
+# Run build.sh to build the docker image 
+# Use the download-config-files.sh to get the config files
+# Use the example run scripts to start the node.
 
 to run as relay node you just need the files provided by download-config-files.sh
 
