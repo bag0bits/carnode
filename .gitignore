@@ -1,8 +1,8 @@
 db
+mainnet-alonzo-genesis.json
 mainnet-byron-genesis.json
 mainnet-config.json
 mainnet-shelley-genesis.json
 mainnet-topology.json
 ._.DS_Store
 .DS_Store
-debug.sh
