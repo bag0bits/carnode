@@ -1,14 +1,17 @@
-PORT=6000
-NODENAME=cardano-relay01
-docker run -ti --rm \
-        --user 0 \
-        --name ${NODENAME} \
-	-v $(pwd)/conf:/home/cardano/node/conf \
-	-v $(pwd)/db:/home/cardano/node/db \
-	-p ${PORT}:6000 carnode \
-	cardano-node run --topology conf/mainnet-topology.json \
-                         --config conf/mainnet-config.json \
-                         --database-path db \
-                         --socket-path db/socket \
-                         --host-addr 0.0.0.0 \
-                         --port 6000
+CNODE=/home/cardano/.local/bin/cardano-node
+NODE_HOME=/home/cardano/node
+TOPOLOGY=${NODE_HOME}/mainnet-topology.json
+CONFIG=${NODE_HOME}/mainnet-config.json
+DB_PATH=${NODE_HOME}/db
+SOCKET_PATH=${NODE_HOME}/socket
+HOSTADDR=0.0.0.0
+PORT=3001
+
+docker run -ti --rm --name producer --entrypoint ${CNODE} -p ${PORT}:3001 -v $(pwd):${NODE_HOME} carnode run \
+	 --topology ${TOPOLOGY} \
+	 --database-path ${DB_PATH} \
+	 --socket-path ${SOCKET_PATH} \
+	 --host-addr ${HOSTADDR} \
+	 --port 3001 \
+	 --config ${CONFIG} \
+	 +RTS -N -RTS

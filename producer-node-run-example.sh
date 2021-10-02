@@ -1,17 +1,23 @@
-PORT=6001
-NODENAME=cardano-producer01
-docker run -d --rm \
-        --user 0 \
-        --name ${NODENAME} \
-	-v $(pwd)/conf:/home/cardano/node/conf \
-	-v $(pwd)/db:/home/cardano/node/db \
-	-p ${PORT}:6000 carnode \
-	cardano-node run --topology conf/mainnet-topology.json \
-                         --config conf/mainnet-config.json \
-                         --database-path db \
-                         --socket-path socket \
-                         --host-addr 0.0.0.0 \
-                         --port 6000 \
-                         --shelley-kes-key conf/kes.skey \
-                         --shelley-vrf-key conf/vrf.skey \
-                         --shelley-operational-certificate conf/node.cert
+CNODE=/home/cardano/.local/bin/cardano-node
+NODE_HOME=/home/cardano/node
+TOPOLOGY=${NODE_HOME}/mainnet-topology.json
+CONFIG=${NODE_HOME}/mainnet-config.json
+DB_PATH=${NODE_HOME}/db
+SOCKET_PATH=${NODE_HOME}/socket
+KES=${NODE_HOME}/kes.skey
+VRF=${NODE_HOME}/vrf.skey
+CERT=${NODE_HOME}/node.cert
+HOSTADDR=0.0.0.0
+PORT=3001
+
+docker run -ti --rm --name producer --entrypoint ${CNODE} -p ${PORT}:3001 -v $(pwd):${NODE_HOME} carnode run \
+	 --topology ${TOPOLOGY} \
+	 --database-path ${DB_PATH} \
+	 --socket-path ${SOCKET_PATH} \
+	 --host-addr ${HOSTADDR} \
+	 --port 3001 \
+	 --config ${CONFIG} \
+	 +RTS -N -RTS \
+         --shelley-kes-key ${KES} \
+         --shelley-vrf-key ${VRF} \
+         --shelley-operational-certificate ${CERT} 
