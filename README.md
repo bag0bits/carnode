@@ -1,3 +1,5 @@
+Docker image for cardano-node 1.30.1 on ubuntu 20.04
+
 to run as relay node you just need the files provided by download-config-files.sh
 
 to run as producer, along with configs like the relay node you will also need
