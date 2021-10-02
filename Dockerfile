@@ -62,7 +62,7 @@ run ghcup set cabal 3.4.0.0
 run ghcup install ghc 8.10.4
 run ghcup set ghc 8.10.4
 
-## Now to Cardano node and cli (tag 1.25.1)
+## Now to Cardano node and cli (tag 1.30.1)
 ############################################
 run echo "go 1.30.1"
 run echo 'export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"' >> /home/cardano/.bashrc
