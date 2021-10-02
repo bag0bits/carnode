@@ -1,9 +1,9 @@
 ###################################################
 ###
-### Dockerfile for minimal cardano-node operation
-### Version 0.1
+### Dockerfile for ubuntu/cardano-node operation
+### Version 0.3
 ### by: bag0bits
-### Date: 2021-02-13
+### Date: 2021-10-02
 ###
 ###################################################
 
@@ -11,7 +11,7 @@
 
 # v0.1 cardano-node version 1.25.1 
 # v0.2 cardano-node version 1.29.0
-
+# v0.3 cardano-node version 1.30.1
 
 ## lock Ubuntu to 20.04
 ########################
