@@ -6,6 +6,8 @@ CHANGES
 - v1.30.1 cardano-node version 1.30.1
 - v1.31.0 cardano-node version 1.31.0 and add cncli
 
+## How to use.. ish...
+
 1. Run build.sh to build the docker image 
 2. Use the download-config-files.sh to get the config files
 3. Use the example run scripts to start the node.
