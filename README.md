@@ -8,6 +8,8 @@ CHANGES
 
 ## How to use.. ish...
 
+This process will download and build from source cardano-node and cardano-cli from IOG's repository, along with a couple of other IOG supporting software. It's working for me but I was the one building this so what you do with your time is all you.
+
 1. Run build.sh to build the docker image 
 2. Use the download-config-files.sh to get the config files
 3. Use the example run scripts to start the node.
