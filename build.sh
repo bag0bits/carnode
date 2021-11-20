@@ -1,1 +1,1 @@
-docker build -t carnode .
+docker build -t carnode:1.31.0 .
