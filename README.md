@@ -1,4 +1,10 @@
-# Docker image for cardano-node 1.30.1 on ubuntu 20.04. 
+# Docker image for cardano-node 1.31.0 on ubuntu 20.04. 
+
+CHANGES
+v0.1 cardano-node version 1.25.1 
+v0.2 cardano-node version 1.29.0
+v0.3 cardano-node version 1.30.1
+v0.4 cardano-node version 1.31.0 and add cncli
 
 1. Run build.sh to build the docker image 
 2. Use the download-config-files.sh to get the config files
