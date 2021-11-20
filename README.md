@@ -53,9 +53,3 @@ Producer:
     node.cert
 
 The example startup scripts will start the producer to listen on port 3001 and 3002 for the relay node.
-
-To run gLiveView:
-
-    docker exec -ti relay1 /bin/bash -l -c "/home/cardano/node/gLiveView.sh"
-    docker exec -ti producer /bin/bash -l -c "/home/cardano/node/gLiveView.sh"
-
