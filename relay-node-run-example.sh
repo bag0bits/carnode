@@ -7,7 +7,7 @@ SOCKET_PATH=${NODE_HOME}/socket
 HOSTADDR=0.0.0.0
 PORT=3002
 
-docker run -ti --rm --name relay1 --entrypoint ${CNODE} -p ${PORT}:3001 -v $(pwd):${NODE_HOME} carnode run \
+docker run -tid --rm --name relay1 --entrypoint ${CNODE} -p ${PORT}:3001 -v $(pwd):${NODE_HOME} carnode run \
 	 --topology ${TOPOLOGY} \
 	 --database-path ${DB_PATH} \
 	 --socket-path ${SOCKET_PATH} \
