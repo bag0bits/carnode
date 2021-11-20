@@ -1,18 +1,18 @@
 ###################################################
 ###
 ### Dockerfile for ubuntu/cardano-node operation
-### Version 0.3
+### Version 1.31.0
 ### by: bag0bits
-### Date: 2021-10-02
+### Date: 2021-11-20
 ###
 ###################################################
 
 #Release note
 
-# v0.1 cardano-node version 1.25.1 
-# v0.2 cardano-node version 1.29.0
-# v0.3 cardano-node version 1.30.1
-# v0.4 cardano-node version 1.31.0 and add cncli
+# v1.25.1 cardano-node version 1.25.1 
+# v1.29.0 cardano-node version 1.29.0
+# v1.30.1 cardano-node version 1.30.1
+# v1.31.0 cardano-node version 1.31.0 and add cncli
 
 ## lock Ubuntu to 20.04
 ########################
