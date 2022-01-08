@@ -6,7 +6,7 @@ CHANGES
 - v1.30.1 cardano-node version 1.30.1
 - v1.31.0 cardano-node version 1.31.0 and add cncli
 - v1.32.1 cardano-node version 1.32.1
-- v1.33.0 cardano-node version 1.33.0
+- v1.33.0 cardano-node version 1.33.0 and upgrade ghc to 8.10.7
 
 ## How to use.. ish...
 
