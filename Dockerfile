@@ -14,7 +14,7 @@
 # v1.30.1 cardano-node version 1.30.1
 # v1.31.0 cardano-node version 1.31.0 and add cncli
 # v1.32.1 cardano-node version 1.32.1
-# v1.33.0 cardano-node version 1.33.0 
+# v1.33.0 cardano-node version 1.33.0 and upgrade ghc to 8.10.7
 
 ## lock Ubuntu to 20.04
 ########################
@@ -62,8 +62,8 @@ workdir /home/cardano
 run ghcup upgrade
 run ghcup install cabal 3.4.0.0
 run ghcup set cabal 3.4.0.0
-run ghcup install ghc 8.10.4
-run ghcup set ghc 8.10.4
+run ghcup install ghc 8.10.7
+run ghcup set ghc 8.10.7
 
 ## Now to Cardano node and cli (tag 1.33.0)
 ############################################
@@ -78,14 +78,14 @@ run chown -R cardano.cardano cardano-node
 workdir /home/cardano/src/cardano-node
 run git fetch --all --recurse-submodules --tags
 run git checkout tags/1.33.0
-run cabal configure -O0 -w ghc-8.10.4
+run cabal configure -O0 -w ghc-8.10.7
 run echo "package cardano-crypto-praos" >> cabal.project.local
 run echo "  flags: -external-libsodium-vrf" >> cabal.project.local
 run sed -i /home/cardano/.cabal/config -e "s/overwrite-policy:/overwrite-policy: always/g"
 run cabal build cardano-cli cardano-node
 run mkdir -p /home/cardano/.local/bin
-run cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.4/cardano-node-1.33.0/x/cardano-node/noopt/build/cardano-node/cardano-node /home/cardano/.local/bin/
-run cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.4/cardano-cli-1.33.0/x/cardano-cli/noopt/build/cardano-cli/cardano-cli /home/cardano/.local/bin/
+run cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-node-1.33.0/x/cardano-node/noopt/build/cardano-node/cardano-node /home/cardano/.local/bin/
+run cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-cli-1.33.0/x/cardano-cli/noopt/build/cardano-cli/cardano-cli /home/cardano/.local/bin/
 run echo 'export PATH="/home/cardano/.local/bin:${PATH}"' >> /home/cardano/.bashrc
 run echo 'export CARDANO_NODE_SOCKET_PATH="/home/cardano/node/socket"' >> /home/cardano/.bashrc
 
