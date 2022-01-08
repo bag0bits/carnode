@@ -14,7 +14,7 @@
 # v1.30.1 cardano-node version 1.30.1
 # v1.31.0 cardano-node version 1.31.0 and add cncli
 # v1.32.1 cardano-node version 1.32.1
-# v1.33.0 cardano-node version 1.33.0 and upgrade ghc to 8.10.7
+# v1.33.0 cardano-node version 1.33.0, ghc -> 8.10.7, cncli -> 4.0.4 
 
 ## lock Ubuntu to 20.04
 ########################
@@ -67,7 +67,6 @@ run ghcup set ghc 8.10.7
 
 ## Now to Cardano node and cli (tag 1.33.0)
 ############################################
-run echo "go 1.33.0"
 run echo 'export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"' >> /home/cardano/.bashrc
 run echo 'export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"' >> /home/cardano/.bashrc
 env LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
@@ -108,9 +107,9 @@ run sed -i env -e 's@#SOCKET="${CNODE_HOME}/sockets/node0.socket"@SOCKET="/home/
 ###################
 workdir /home/cardano/.local/bin/
 user cardano
-run wget https://github.com/AndrewWestberg/cncli/releases/download/v4.0.2/cncli-4.0.2-x86_64-unknown-linux-gnu.tar.gz
-run tar zxvf cncli-4.0.2-x86_64-unknown-linux-gnu.tar.gz
-run rm cncli-4.0.2-x86_64-unknown-linux-gnu.tar.gz
+run wget https://github.com/AndrewWestberg/cncli/releases/download/v4.0.4/cncli-4.0.4-x86_64-unknown-linux-gnu.tar.gz
+run tar zxvf cncli-4.0.4-x86_64-unknown-linux-gnu.tar.gz
+run rm cncli-4.0.4-x86_64-unknown-linux-gnu.tar.gz
 
 run mkdir /home/cardano/node
 workdir /home/cardano/node
