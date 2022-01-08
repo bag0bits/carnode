@@ -18,101 +18,101 @@
 
 ## lock Ubuntu to 20.04
 ########################
-from ubuntu:20.04
+FROM ubuntu:20.04
 
 ## Make apt-get non-interactive
 ################################
-env DEBIAN_FRONTEND="noninteractive"
+ENV DEBIAN_FRONTEND="noninteractive"
 
 ## Update the repo and install all the needed packages
 #######################################################
-run apt-get update
-run apt-get -y upgrade
-run apt-get -y install git jq bc make automake rsync htop curl build-essential pkg-config libffi-dev libgmp-dev libssl-dev libtinfo-dev libsystemd-dev zlib1g-dev make g++ wget libncursesw5 libtool autoconf libnuma-dev pkg-config libgmp-dev libssl-dev libtinfo-dev libsystemd-dev zlib1g-dev build-essential curl libgmp-dev libffi-dev libncurses-dev libtinfo5 
+RUN apt-get update
+RUN apt-get -y upgrade
+RUN apt-get -y install git jq bc make automake rsync htop curl build-essential pkg-config libffi-dev libgmp-dev libssl-dev libtinfo-dev libsystemd-dev zlib1g-dev make g++ wget libncursesw5 libtool autoconf libnuma-dev pkg-config libgmp-dev libssl-dev libtinfo-dev libsystemd-dev zlib1g-dev build-essential curl libgmp-dev libffi-dev libncurses-dev libtinfo5 
 
 ## Add the cardano user and set user as the installer
 ######################################################
-run useradd -ms /bin/bash cardano
-user cardano
-workdir /home/cardano
-run mkdir -p /home/cardano/src
+RUN useradd -ms /bin/bash cardano
+USER cardano
+WORKDIR /home/cardano
+RUN mkdir -p /home/cardano/src
 
 ## Install libsodium and set checkout tag to 66f017f1
 ######################################################
-workdir /home/cardano/src
-run git clone https://github.com/input-output-hk/libsodium
-workdir /home/cardano/src/libsodium
-run git checkout 66f017f1
-run ./autogen.sh
-run ./configure
-run make
-user root
-run make install
-user cardano
+WORKDIR /home/cardano/src
+RUN git clone https://github.com/input-output-hk/libsodium
+WORKDIR /home/cardano/src/libsodium
+RUN git checkout 66f017f1
+RUN ./autogen.sh
+RUN ./configure
+RUN make
+USER root
+RUN make install
+USER cardano
 
 ## Install Cabal and ghc
 #########################
-workdir /home/cardano/src
-env BOOTSTRAP_HASKELL_NONINTERACTIVE=1
-run curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org > ghc.sh
-run chmod +x /home/cardano/src/ghc.sh
-run /home/cardano/src/ghc.sh
-env PATH=/home/cardano/.ghcup/bin:${PATH}
-workdir /home/cardano
-run ghcup upgrade
-run ghcup install cabal 3.4.0.0
-run ghcup set cabal 3.4.0.0
-run ghcup install ghc 8.10.7
-run ghcup set ghc 8.10.7
+WORKDIR /home/cardano/src
+ENV BOOTSTRAP_HASKELL_NONINTERACTIVE=1
+RUN curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org > ghc.sh
+RUN chmod +x /home/cardano/src/ghc.sh
+RUN /home/cardano/src/ghc.sh
+ENV PATH=/home/cardano/.ghcup/bin:${PATH}
+WORKDIR /home/cardano
+RUN ghcup upgrade
+RUN ghcup install cabal 3.4.0.0
+RUN ghcup set cabal 3.4.0.0
+RUN ghcup install ghc 8.10.7
+RUN ghcup set ghc 8.10.7
 
 ## Now to Cardano node and cli (tag 1.33.0)
 ############################################
-run echo 'export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"' >> /home/cardano/.bashrc
-run echo 'export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"' >> /home/cardano/.bashrc
-env LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
-env PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
-workdir /home/cardano/src
-run git clone https://github.com/input-output-hk/cardano-node.git
-run chown -R cardano.cardano cardano-node
-workdir /home/cardano/src/cardano-node
-run git fetch --all --recurse-submodules --tags
-run git checkout tags/1.33.0
-run cabal configure -O0 -w ghc-8.10.7
-run echo "package cardano-crypto-praos" >> cabal.project.local
-run echo "  flags: -external-libsodium-vrf" >> cabal.project.local
-run sed -i /home/cardano/.cabal/config -e "s/overwrite-policy:/overwrite-policy: always/g"
-run cabal build cardano-cli cardano-node
-run mkdir -p /home/cardano/.local/bin
-run cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-node-1.33.0/x/cardano-node/noopt/build/cardano-node/cardano-node /home/cardano/.local/bin/
-run cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-cli-1.33.0/x/cardano-cli/noopt/build/cardano-cli/cardano-cli /home/cardano/.local/bin/
-run echo 'export PATH="/home/cardano/.local/bin:${PATH}"' >> /home/cardano/.bashrc
-run echo 'export CARDANO_NODE_SOCKET_PATH="/home/cardano/node/socket"' >> /home/cardano/.bashrc
+RUN echo 'export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"' >> /home/cardano/.bashrc
+RUN echo 'export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"' >> /home/cardano/.bashrc
+ENV LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
+ENV PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
+WORKDIR /home/cardano/src
+RUN git clone https://github.com/input-output-hk/cardano-node.git
+RUN chown -R cardano.cardano cardano-node
+WORKDIR /home/cardano/src/cardano-node
+RUN git fetch --all --recurse-submodules --tags
+RUN git checkout tags/1.33.0
+RUN cabal configure -O0 -w ghc-8.10.7
+RUN echo "package cardano-crypto-praos" >> cabal.project.local
+RUN echo "  flags: -external-libsodium-vrf" >> cabal.project.local
+RUN sed -i /home/cardano/.cabal/config -e "s/overwrite-policy:/overwrite-policy: always/g"
+RUN cabal build cardano-cli cardano-node
+RUN mkdir -p /home/cardano/.local/bin
+RUN cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-node-1.33.0/x/cardano-node/noopt/build/cardano-node/cardano-node /home/cardano/.local/bin/
+RUN cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-cli-1.33.0/x/cardano-cli/noopt/build/cardano-cli/cardano-cli /home/cardano/.local/bin/
+RUN echo 'export PATH="/home/cardano/.local/bin:${PATH}"' >> /home/cardano/.bashrc
+RUN echo 'export CARDANO_NODE_SOCKET_PATH="/home/cardano/node/socket"' >> /home/cardano/.bashrc
 
 
 ## install gLiveView
 #####################
-workdir /home/cardano
-user root
-run apt-get install -y tcptraceroute lsof
-user cardano
-run wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/gLiveView.sh
-run wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/env
-run chmod 755 gLiveView.sh
+WORKDIR /home/cardano
+USER root
+RUN apt-get install -y tcptraceroute lsof
+USER cardano
+RUN wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/gLiveView.sh
+RUN wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/env
+RUN chmod 755 gLiveView.sh
 
-run sed -i env -e 's@#CONFIG="${CNODE_HOME}/files/config.json"@CONFIG="/home/cardano/node/mainnet-config.json"@g'
-run sed -i env -e 's@#SOCKET="${CNODE_HOME}/sockets/node0.socket"@SOCKET="/home/cardano/node/socket"@g'
+RUN sed -i env -e 's@#CONFIG="${CNODE_HOME}/files/config.json"@CONFIG="/home/cardano/node/mainnet-config.json"@g'
+RUN sed -i env -e 's@#SOCKET="${CNODE_HOME}/sockets/node0.socket"@SOCKET="/home/cardano/node/socket"@g'
 
 
 ## installing cncli
 ###################
-workdir /home/cardano/.local/bin/
-user cardano
-run wget https://github.com/AndrewWestberg/cncli/releases/download/v4.0.4/cncli-4.0.4-x86_64-unknown-linux-gnu.tar.gz
-run tar zxvf cncli-4.0.4-x86_64-unknown-linux-gnu.tar.gz
-run rm cncli-4.0.4-x86_64-unknown-linux-gnu.tar.gz
+WORKDIR /home/cardano/.local/bin/
+USER cardano
+RUN wget https://github.com/AndrewWestberg/cncli/releases/download/v4.0.4/cncli-4.0.4-x86_64-unknown-linux-gnu.tar.gz
+RUN tar zxvf cncli-4.0.4-x86_64-unknown-linux-gnu.tar.gz
+RUN rm cncli-4.0.4-x86_64-unknown-linux-gnu.tar.gz
 
-run mkdir /home/cardano/node
-workdir /home/cardano/node
+RUN mkdir /home/cardano/node
+WORKDIR /home/cardano/node
 
 ENTRYPOINT ["/home/cardano/.local/bin/cardano-cli"]
 CMD ["query tip --mainnet"]
