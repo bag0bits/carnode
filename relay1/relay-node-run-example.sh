@@ -11,7 +11,7 @@ PROMETHEUS_PORT=5002
 CARVER=1.33.0
 THREADS=8
 
-docker run -tid --rm --name producer \
+docker run -tid --rm --name relay1 \
 	--log-opt max-size=512m \
 	--entrypoint ${CNODE} \
 	-p ${PORT}:3001 \
