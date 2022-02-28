@@ -15,7 +15,7 @@
 # v1.31.0 cardano-node version 1.31.0 and add cncli
 # v1.32.1 cardano-node version 1.32.1
 # v1.33.0 cardano-node version 1.33.0, ghc -> 8.10.7, cncli -> 4.0.4 
-# v1.34.0 cardano-node version 1.34.0
+# v1.34.0 cardano-node version 1.34.0, cabal -> 3.6.2.0
 
 ## lock Ubuntu to 20.04
 ########################
@@ -61,8 +61,8 @@ RUN /home/cardano/src/ghc.sh
 ENV PATH=/home/cardano/.ghcup/bin:${PATH}
 WORKDIR /home/cardano
 RUN ghcup upgrade
-RUN ghcup install cabal 3.4.0.0
-RUN ghcup set cabal 3.4.0.0
+RUN ghcup install cabal 3.6.2.0
+RUN ghcup set cabal 3.6.2.0
 RUN ghcup install ghc 8.10.7
 RUN ghcup set ghc 8.10.7
 
