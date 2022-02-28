@@ -1,7 +1,7 @@
 ###################################################
 ###
 ### Dockerfile for ubuntu/cardano-node operation
-### Version 1.33.0
+### Version 1.34.0
 ### by: bag0bits
 ### Date: 2022-01-08
 ###
@@ -15,6 +15,7 @@
 # v1.31.0 cardano-node version 1.31.0 and add cncli
 # v1.32.1 cardano-node version 1.32.1
 # v1.33.0 cardano-node version 1.33.0, ghc -> 8.10.7, cncli -> 4.0.4 
+# v1.34.0 cardano-node version 1.34.0
 
 ## lock Ubuntu to 20.04
 ########################
@@ -65,7 +66,7 @@ RUN ghcup set cabal 3.4.0.0
 RUN ghcup install ghc 8.10.7
 RUN ghcup set ghc 8.10.7
 
-## Now to Cardano node and cli (tag 1.33.0)
+## Now to Cardano node and cli (tag 1.34.0)
 ############################################
 RUN echo 'export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"' >> /home/cardano/.bashrc
 RUN echo 'export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"' >> /home/cardano/.bashrc
@@ -76,15 +77,15 @@ RUN git clone https://github.com/input-output-hk/cardano-node.git
 RUN chown -R cardano.cardano cardano-node
 WORKDIR /home/cardano/src/cardano-node
 RUN git fetch --all --recurse-submodules --tags
-RUN git checkout tags/1.33.0
+RUN git checkout tags/1.34.0
 RUN cabal configure -O0 -w ghc-8.10.7
 RUN echo "package cardano-crypto-praos" >> cabal.project.local
 RUN echo "  flags: -external-libsodium-vrf" >> cabal.project.local
 RUN sed -i /home/cardano/.cabal/config -e "s/overwrite-policy:/overwrite-policy: always/g"
 RUN cabal build cardano-cli cardano-node
 RUN mkdir -p /home/cardano/.local/bin
-RUN cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-node-1.33.0/x/cardano-node/noopt/build/cardano-node/cardano-node /home/cardano/.local/bin/
-RUN cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-cli-1.33.0/x/cardano-cli/noopt/build/cardano-cli/cardano-cli /home/cardano/.local/bin/
+RUN cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-node-1.34.0/x/cardano-node/noopt/build/cardano-node/cardano-node /home/cardano/.local/bin/
+RUN cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-cli-1.34.0/x/cardano-cli/noopt/build/cardano-cli/cardano-cli /home/cardano/.local/bin/
 RUN echo 'export PATH="/home/cardano/.local/bin:${PATH}"' >> /home/cardano/.bashrc
 RUN echo 'export CARDANO_NODE_SOCKET_PATH="/home/cardano/node/socket"' >> /home/cardano/.bashrc
 
