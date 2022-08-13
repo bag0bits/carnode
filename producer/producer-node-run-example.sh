@@ -11,7 +11,7 @@ HOSTADDR=0.0.0.0
 PORT=3001
 EKG_PORT=4001
 PROMETHEUS_PORT=5001
-CARVER=1.33.0
+CARVER=1.35.3
 THREADS=8
 
 docker run -tid --rm --name producer \
