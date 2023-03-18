@@ -1,4 +1,4 @@
-# Docker image for cardano-node 1.35.5 on ubuntu 20.04. 
+# Docker image for cardano-node 1.35.6 on ubuntu 20.04. 
 
 CHANGES
 - v1.25.1 cardano-node version 1.25.1 
@@ -12,6 +12,7 @@ CHANGES
 - v1.35.3 cardano-node version 1.35.3 because wtf
 - v1.35.4 cardano-node version 1.35.4
 - v1.35.5 cardano-node version 1.35.5
+- v1.35.6 cardano-node version 1.35.6
 
 ## How to use.. ish...
 
