@@ -1,9 +1,9 @@
 ###################################################
 ###
 ### Dockerfile for ubuntu/cardano-node operation
-### Version 1.35.6
+### Version 8.0.0
 ### by: bag0bits
-### Date: 2023-03-17
+### Date: 2023-05-20
 ###
 ###################################################
 
@@ -21,6 +21,7 @@
 # v1.35.4 cardano-node version 1.35.4
 # v1.35.5 cardano-node version 1.35.5
 # v1.35.6 cardano-node version 1.35.6
+# v8.0.0 cardano-node version 8.0.0, upgrade libsodium
 
 ## lock Ubuntu to 20.04
 ########################
@@ -43,12 +44,12 @@ USER cardano
 WORKDIR /home/cardano
 RUN mkdir -p /home/cardano/src
 
-## Install libsodium and set checkout tag to 66f017f1
-######################################################
+## Install libsodium and set checkout tag to dbb48cc
+#####################################################
 WORKDIR /home/cardano/src
 RUN git clone https://github.com/input-output-hk/libsodium
 WORKDIR /home/cardano/src/libsodium
-RUN git checkout 66f017f1
+RUN git checkout dbb48cc
 RUN ./autogen.sh
 RUN ./configure
 RUN make
@@ -85,7 +86,7 @@ RUN ghcup set cabal 3.6.2.0
 RUN ghcup install ghc 8.10.7
 RUN ghcup set ghc 8.10.7
 
-## Now to Cardano node and cli (tag 1.35.6)
+## Now to Cardano node and cli (tag 8.0.0)
 ############################################
 RUN echo 'export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"' >> /home/cardano/.bashrc
 RUN echo 'export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"' >> /home/cardano/.bashrc
@@ -96,17 +97,18 @@ RUN git clone https://github.com/input-output-hk/cardano-node.git
 RUN chown -R cardano.cardano cardano-node
 WORKDIR /home/cardano/src/cardano-node
 RUN git fetch --all --recurse-submodules --tags
-RUN git checkout tags/1.35.6
+RUN git checkout tags/8.0.0
 #RUN cabal configure -O0 -w ghc-8.10.7
 RUN cabal update
 RUN cabal configure --with-compiler=ghc-8.10.7
+RUN echo "with-compiler: ghc-8.10.7" >> cabal.project.local
 RUN echo "package cardano-crypto-praos" >> cabal.project.local
 RUN echo "  flags: -external-libsodium-vrf" >> cabal.project.local
 RUN sed -i /home/cardano/.cabal/config -e "s/overwrite-policy:/overwrite-policy: always/g"
 RUN cabal build cardano-cli cardano-node
 RUN mkdir -p /home/cardano/.local/bin
-RUN cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-node-1.35.6/x/cardano-node/build/cardano-node/cardano-node /home/cardano/.local/bin/
-RUN cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-cli-1.35.6/x/cardano-cli/build/cardano-cli/cardano-cli /home/cardano/.local/bin/
+RUN cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-node-8.0.0/x/cardano-node/build/cardano-node/cardano-node /home/cardano/.local/bin/
+RUN cp ./dist-newstyle/build/x86_64-linux/ghc-8.10.7/cardano-cli-8.0.0/x/cardano-cli/build/cardano-cli/cardano-cli /home/cardano/.local/bin/
 RUN echo 'export PATH="/home/cardano/.local/bin:${PATH}"' >> /home/cardano/.bashrc
 RUN echo 'export CARDANO_NODE_SOCKET_PATH="/home/cardano/node/socket"' >> /home/cardano/.bashrc
 

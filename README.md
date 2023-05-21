@@ -13,6 +13,7 @@ CHANGES
 - v1.35.4 cardano-node version 1.35.4
 - v1.35.5 cardano-node version 1.35.5
 - v1.35.6 cardano-node version 1.35.6
+- v8.0.0 cardano-node version 8.0.0, upgrade libsodium
 
 ## How to use.. ish...
 

@@ -1,3 +1,3 @@
 #/bin/bash
 
-docker build --no-cache -t carnode:1.35.6 .
+docker build --no-cache -t carnode:8.0.0 .
